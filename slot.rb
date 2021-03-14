@@ -1,5 +1,5 @@
 def slot(coin, point, betCoin)
-
+    
     puts "Enterを3回押す"
     gets
     puts "---------------"
@@ -20,21 +20,38 @@ def slot(coin, point, betCoin)
     no9 = rand(1..7)
     puts "|#{no1}|#{no4}|#{no7}|\n|#{no2}|#{no5}|#{no8}|\n|#{no3}|#{no6}|#{no9}|\n"
     if no1 == no4 && no1 == no7
-       coin, point = Bonus(coin, point, no1, betCoin)
+        coin, point = Bonus(coin, point, no1, betCoin)
+        if no1 == 7
+            bonusTime = 1
+        end
     end
     if no2 == no5 && no2 == no8
         coin, point = Bonus(coin, point, no2, betCoin)
+        if no2 == 7
+            bonusTime = 1
+        end
     end
     if no3 == no6 && no3 == no9
         coin, point = Bonus(coin, point, no3, betCoin)
-        
+        if no3 == 7
+            bonusTime = 1
+        end
     end
     if no1 == no5 && no1 == no9
         coin, point = Bonus(coin, point, no1, betCoin)
-        
+        if no1 == 7
+            bonusTime = 1
+        end
     end
     if no3 == no5 && no3 == no7
         coin, point = Bonus(coin, point, no3, betCoin)
+        if no3 == 7
+            bonusTime = 1
+        end
+    end
+    if bonusTime == 1
+        coin, point = BonusTime(coin, point, betCoin)
+    return coin, point, bonusTime
     end
     return coin, point
 end
@@ -82,8 +99,9 @@ def Bonus(coin, point, no, betCoin)
         when 7
             coin = coin + slot_7["bonusCoin"] * betCoin
             point = point + slot_7["bonusPoint"] * betCoin
+            bonusTime = 1
             puts "#{no}が揃いました！"
-            return coin, point
+            return coin, point, bonusTime
         when 8
             coin = coin + slot_8["bonusCoin"] * betCoin
             point = point + slot_8["bonusPoint"] * betCoin
@@ -95,6 +113,59 @@ def Bonus(coin, point, no, betCoin)
             puts "#{no}が揃いました！"
             return coin, point
     end
+end
+def BonusTime(coin, point, betCoin)
+    bonusTime = 0
+    10.downto(1) do |value|
+        puts "==ボーナスタイム！=="
+        puts "残り#{value}回！    残りコイン：#{coin}"
+        puts "Enterを3回押す"
+        gets
+        puts "---------------"
+        no1 = rand(5..7)
+        no2 = rand(5..7)
+        no3 = rand(5..7)
+        puts "|#{no1}| | |\n|#{no2}| | |\n|#{no3}| | |\n"
+        gets
+        puts "---------------"
+        no4 = rand(6..8)
+        no5 = rand(6..8)
+        no6 = rand(6..8)
+        puts "|#{no1}|#{no4}| |\n|#{no2}|#{no5}| |\n|#{no3}|#{no6}| |\n"
+        gets
+        puts "---------------"
+        no7 = rand(7..9)
+        no8 = rand(7..9)
+        no9 = rand(7..9)
+        puts "|#{no1}|#{no4}|#{no7}|\n|#{no2}|#{no5}|#{no8}|\n|#{no3}|#{no6}|#{no9}|\n"
+        if no1 == no4 && no1 == no7
+            coin, point = Bonus(coin, point, no1, betCoin)
+            if no1 == 7
+            end
+        end
+        if no2 == no5 && no2 == no8
+            coin, point = Bonus(coin, point, no2, betCoin)
+            if no1 == 7
+            end
+        end
+        if no3 == no6 && no3 == no9
+            coin, point = Bonus(coin, point, no3, betCoin)
+            if no1 == 7
+            end
+        end
+        if no1 == no5 && no1 == no9
+            coin, point = Bonus(coin, point, no1, betCoin)
+            if no1 == 7
+            end
+        end
+        if no3 == no5 && no3 == no7
+            coin, point = Bonus(coin, point, no3, betCoin)
+            if no1 == 7
+            end
+        end
+    end
+    puts "ボーナスタイム終了！"
+    return coin, point, bonusTime
 end
 #main#
 point = 0
